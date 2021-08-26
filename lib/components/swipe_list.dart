@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/configs/routes/tasks.dart';
 import 'package:to_do_app/models/task.model.dart';
 
 List<TaskModel> tasks = List.from([
@@ -34,6 +35,8 @@ class SwipeList extends StatelessWidget {
           itemCount: tasks.length,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
+              confirmDismiss: (DismissDirection direction) =>
+                  handleConfirmDismiss(direction, context),
               key: Key(index.toString()),
               secondaryBackground: Container(
                 color: tasks[index].status,
@@ -60,6 +63,17 @@ class SwipeList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  bool get newMethod => false;
+
+  Future<bool> handleConfirmDismiss(
+      DismissDirection direction, BuildContext context) async {
+    if (direction == DismissDirection.endToStart) {
+      Navigator.pushNamed(context, MANAGE_TASK);
+    }
+
+    return false;
   }
 }
 
