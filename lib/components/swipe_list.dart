@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
-import 'package:to_do_app/models/task.model.dart';
+import 'package:to_do_app/models/task/main.dart';
 
-List<TaskModel> tasks = List.from([
-  new TaskModel("Meeting", "Room 408", "12:30", Colors.red),
-  new TaskModel(
+List<Task> tasks = List.from([
+  new Task("Meeting", "Room 408", "12:30", Colors.red),
+  new Task(
       "Monthly Report", "Check with quality team", "14:30", Colors.purple),
-  new TaskModel(
+  new Task(
       "Call with Mike", "Discuss about release", "15:00", Colors.amber),
-  new TaskModel(
+  new Task(
       "Update", "Update website with new design", "15:30", Colors.green),
-  new TaskModel("Email", "Respond to Charles Email", "16:30", Colors.blue)
+  new Task("Email", "Respond to Charles Email", "16:30", Colors.blue)
 ]);
 
 class SwipeList extends StatelessWidget {
@@ -73,7 +73,7 @@ class SwipeList extends StatelessWidget {
       Navigator.pushNamed(context, MANAGE_TASK);
     }
 
-    return false;
+    return true;
   }
 }
 
@@ -105,7 +105,7 @@ class IconDissmissible extends StatelessWidget {
 
 class ListItemContainer extends StatelessWidget {
   final int index;
-  final TaskModel task;
+  final Task task;
 
   const ListItemContainer({Key? key, required this.index, required this.task})
       : super(key: key);
