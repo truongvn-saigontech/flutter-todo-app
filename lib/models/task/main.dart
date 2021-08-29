@@ -10,10 +10,25 @@ class Task {
   String taskname, subtask, tasktime;
 
   @ColorSerialiser()
-  final Color status;
+  Color status;
 
-  Task(this.taskname, this.subtask, this.tasktime, this.status);
+  Task(
+      {required this.taskname,
+      required this.subtask,
+      required this.tasktime,
+      required this.status});
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
+
   Map<String, dynamic> toJson() => _$TaskToJson(this);
+
+  Task copyWith(
+      {String? taskname, String? subtask, String? tasktime, Color? status}) {
+    return Task(
+      taskname: taskname ?? this.taskname,
+      subtask: subtask ?? this.subtask,
+      tasktime: tasktime ?? this.tasktime,
+      status: status ?? this.status,
+    );
+  }
 }

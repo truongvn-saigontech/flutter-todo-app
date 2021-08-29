@@ -148,6 +148,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  copy_with_extension:
+    dependency: transitive
+    description:
+      name: copy_with_extension
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
+  copy_with_extension_gen:
+    dependency: "direct main"
+    description:
+      name: copy_with_extension_gen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   crypto:
     dependency: transitive
     description:
@@ -263,6 +277,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   io:
     dependency: transitive
     description:

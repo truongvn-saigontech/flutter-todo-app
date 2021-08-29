@@ -3,14 +3,31 @@ import 'package:to_do_app/configs/routes/tasks.dart';
 import 'package:to_do_app/models/task/main.dart';
 
 List<Task> tasks = List.from([
-  new Task("Meeting", "Room 408", "12:30", Colors.red),
   new Task(
-      "Monthly Report", "Check with quality team", "14:30", Colors.purple),
+      taskname: "Meeting",
+      subtask: "Room 408",
+      tasktime: "12:30",
+      status: Colors.red),
   new Task(
-      "Call with Mike", "Discuss about release", "15:00", Colors.amber),
+      taskname: "Monthly Report",
+      subtask: "Check with quality team",
+      tasktime: "14:30",
+      status: Colors.purple),
   new Task(
-      "Update", "Update website with new design", "15:30", Colors.green),
-  new Task("Email", "Respond to Charles Email", "16:30", Colors.blue)
+      taskname: "Call with Mike",
+      subtask: "Discuss about release",
+      tasktime: "15:00",
+      status: Colors.amber),
+  new Task(
+      taskname: "Update",
+      subtask: "Update website with new design",
+      tasktime: "15:30",
+      status: Colors.green),
+  new Task(
+      taskname: "Email",
+      subtask: "Respond to Charles Email",
+      tasktime: "16:30",
+      status: Colors.blue)
 ]);
 
 class SwipeList extends StatelessWidget {
@@ -70,7 +87,9 @@ class SwipeList extends StatelessWidget {
   Future<bool> handleConfirmDismiss(
       DismissDirection direction, BuildContext context) async {
     if (direction == DismissDirection.endToStart) {
-      Navigator.pushNamed(context, MANAGE_TASK);
+      Navigator.pushNamed(context, MANAGE_TASK, arguments: '12431');
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => ManageTaskScreen(task)))
+      return false;
     }
 
     return true;

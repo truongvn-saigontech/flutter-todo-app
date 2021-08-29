@@ -1,20 +1,24 @@
-import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:day_night_time_picker/lib/constants.dart';
 import 'package:flutter/material.dart';
 
 class TimeSelectV2 extends StatefulWidget {
-  const TimeSelectV2({Key? key}) : super(key: key);
+  final TimeOfDay timeSelect;
+  final Function(TimeOfDay) onSelectDate;
+  const TimeSelectV2({Key? key, required this.timeSelect, required this.onSelectDate})
+      : super(key: key);
 
   @override
   _TimeSelectV2State createState() => _TimeSelectV2State();
 }
 
 class _TimeSelectV2State extends State<TimeSelectV2> {
+  final TimeOfDay initialTime =
+      TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: handleSelectTime,
         child: Container(
           alignment: Alignment.center,
           height: 50.0,
@@ -32,11 +36,8 @@ class _TimeSelectV2State extends State<TimeSelectV2> {
                           color: Colors.white,
                         ),
                         Text(
-                          " 20:00",
-                          style: TextStyle(
-                              color: Colors.white,
-                              // fontWeight: FontWeight.bold,
-                              fontSize: 16.0),
+                          " ${widget.timeSelect.format(context)}",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
                       ],
                     ),
@@ -46,9 +47,9 @@ class _TimeSelectV2State extends State<TimeSelectV2> {
               Text(
                 "  Select time",
                 style: TextStyle(
-                    color: Colors.white,
-                    // fontWeight: FontWeight.bold,
-                    fontSize: 16.0),
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
               ),
             ],
           ),
@@ -56,5 +57,13 @@ class _TimeSelectV2State extends State<TimeSelectV2> {
         // color: Colors.white,
       ),
     );
+  }
+
+  Future<void> handleSelectTime() async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: widget.timeSelect,
+    );
+    widget.onSelectDate(newTime ?? initialTime);
   }
 }

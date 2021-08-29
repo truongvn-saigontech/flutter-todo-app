@@ -8,10 +8,10 @@ part of 'main.dart';
 
 Task _$TaskFromJson(Map<String, dynamic> json) {
   return Task(
-    json['taskname'] as String,
-    json['subtask'] as String,
-    json['tasktime'] as String,
-    const ColorSerialiser().fromJson(json['status'] as int),
+    taskname: json['taskname'] as String,
+    subtask: json['subtask'] as String,
+    tasktime: json['tasktime'] as String,
+    status: const ColorSerialiser().fromJson(json['status'] as int),
   );
 }
 

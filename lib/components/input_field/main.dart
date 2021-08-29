@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/models/validate.dart';
 
 class InputFieldV2 extends StatefulWidget {
-  final dynamic Function(String) onSaved;
+  final void Function(String?)? onSaved;
   final List<Validate> validates;
 
   final bool? isValidField;
@@ -68,10 +68,7 @@ class _InputFieldV2State extends State<InputFieldV2> {
       initialValue: widget.initialValue,
       maxLength: widget.maxLength,
       validator: handleValidator,
-      onSaved: (value) {
-        print(value);
-        print(context);
-      },
+      onSaved: widget.onSaved,
       decoration: InputDecoration(
         labelText: widget.labelText,
         enabledBorder: renderOutline(),
