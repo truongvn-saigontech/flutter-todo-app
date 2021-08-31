@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:to_do_app/components/header.dart';
 import 'package:to_do_app/components/swipe_list.dart';
+import 'package:to_do_app/configs/routes/calendar.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
+import 'package:to_do_app/screens/list_tasks/controller.dart';
 
 class ListTasksScreen extends StatefulWidget {
   ListTasksScreen({Key? key, required this.title}) : super(key: key);
@@ -13,9 +16,10 @@ class ListTasksScreen extends StatefulWidget {
 }
 
 class _ListTasksScreenState extends State<ListTasksScreen> {
+  ListTaskController listTaskController = Get.put(ListTaskController());
 
   void _incrementCounter() {
-    Navigator.pushNamed(context, MANAGE_TASK);
+    Navigator.pushNamed(context, MANAGE_TASK_PATH);
   }
 
   @override
@@ -26,7 +30,10 @@ class _ListTasksScreenState extends State<ListTasksScreen> {
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child: Stack(
-          children: <Widget>[HeaderWrapper(), SwipeList()],
+          children: <Widget>[
+            HeaderWrapper(),
+            SwipeList(dataSource: listTaskController.tasks)
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -50,7 +57,9 @@ class _ListTasksScreenState extends State<ListTasksScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, CALENDAR_PATH);
+              },
               icon: Icon(Icons.home),
               color: Colors.white,
             )

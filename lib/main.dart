@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: LIST_TASKS_PATH,
+      initialRoute: CALENDAR_PATH,
       routes: {
         LIST_TASKS_PATH: (context) =>
             ListTasksScreen(title: 'Flutter Demo Home Page'),
-        MANAGE_TASK: (context) => const ManageTaskScreen(),
+        MANAGE_TASK_PATH: (context) => const ManageTaskScreen(),
         CALENDAR_PATH: (context) => const CalendarScreen(),
       },
     );

@@ -1,42 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
 import 'package:to_do_app/models/task/main.dart';
+import 'package:to_do_app/screens/list_tasks/controller.dart';
+import 'package:to_do_app/screens/manage_task/controller.dart';
 
-List<Task> tasks = List.from([
-  new Task(
-      taskname: "Meeting",
-      subtask: "Room 408",
-      tasktime: "12:30",
-      status: Colors.red),
-  new Task(
-      taskname: "Monthly Report",
-      subtask: "Check with quality team",
-      tasktime: "14:30",
-      status: Colors.purple),
-  new Task(
-      taskname: "Call with Mike",
-      subtask: "Discuss about release",
-      tasktime: "15:00",
-      status: Colors.amber),
-  new Task(
-      taskname: "Update",
-      subtask: "Update website with new design",
-      tasktime: "15:30",
-      status: Colors.green),
-  new Task(
-      taskname: "Email",
-      subtask: "Respond to Charles Email",
-      tasktime: "16:30",
-      status: Colors.blue)
-]);
-
-class SwipeList extends StatelessWidget {
-  SwipeList({Key? key}) : super(key: key);
+class SwipeList extends StatefulWidget {
+  final List<Task> dataSource;
+  SwipeList({Key? key, required this.dataSource}) : super(key: key);
 
   static const double GUTTER = 15;
 
-  void handleDismisItem(DismissDirection direction, int index) {
-    print(direction);
+  @override
+  _SwipeListState createState() => _SwipeListState();
+}
+
+class _SwipeListState extends State<SwipeList> {
+  ListTaskController listTaskController = Get.put(ListTaskController());
+  ManageTaskController manageTaskController = Get.put(ManageTaskController());
+  bool handleDismisItem(DismissDirection direction, int index) {
+    if (direction == DismissDirection.startToEnd) {
+      listTaskController.handleDeleteTask(index);
+      return true;
+    }
+
+    // manageTaskController.task = ;
+    return false;
   }
 
   @override
@@ -46,24 +35,22 @@ class SwipeList extends StatelessWidget {
       child: Container(
         color: Colors.white,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 1.5 - GUTTER,
+        height: MediaQuery.of(context).size.height / 1.5 - SwipeList.GUTTER,
         child: ListView.builder(
           padding: EdgeInsets.zero,
-          itemCount: tasks.length,
+          itemCount: widget.dataSource.length,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
               confirmDismiss: (DismissDirection direction) =>
-                  handleConfirmDismiss(direction, context),
+                  handleConfirmDismiss(direction, context, index),
               key: Key(index.toString()),
               secondaryBackground: Container(
-                color: tasks[index].status,
+                color: widget.dataSource[index].status,
                 child: IconDissmissible(
                   icon: Icons.edit_outlined,
                   alignment: MainAxisAlignment.end,
                 ),
               ),
-              onDismissed: (DismissDirection direction) =>
-                  handleDismisItem(direction, index),
               background: Container(
                 color: Colors.orangeAccent,
                 child: IconDissmissible(
@@ -73,7 +60,7 @@ class SwipeList extends StatelessWidget {
               ),
               child: ListItemContainer(
                 index: index,
-                task: tasks[index],
+                task: widget.dataSource[index],
               ),
             );
           },
@@ -85,13 +72,14 @@ class SwipeList extends StatelessWidget {
   bool get newMethod => false;
 
   Future<bool> handleConfirmDismiss(
-      DismissDirection direction, BuildContext context) async {
+      DismissDirection direction, BuildContext context, int index) async {
     if (direction == DismissDirection.endToStart) {
-      Navigator.pushNamed(context, MANAGE_TASK, arguments: '12431');
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => ManageTaskScreen(task)))
+      manageTaskController.handleAssignTask(listTaskController.tasks.toJson()[index]);
+      Navigator.pushNamed(context, MANAGE_TASK_PATH);
       return false;
     }
 
+    listTaskController.handleDeleteTask(index);
     return true;
   }
 }
@@ -168,7 +156,7 @@ class ListItemContainer extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              task.tasktime,
+                              task.startTime,
                               style: TextStyle(color: Colors.black45),
                             )
                           ],

@@ -22,7 +22,6 @@ class _ColorPickerState extends State<ColorPicker> {
 
   Widget renderItemBuilder(BuildContext context, int index) {
     double boxSize = MediaQuery.of(context).size.width / 5 - 20;
-    print(listColors[index]);
     return Material(
       color: Colors.transparent,
       type: MaterialType.transparency,
@@ -39,9 +38,6 @@ class _ColorPickerState extends State<ColorPicker> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: listColors[index],
-            // boxShadow: [
-            //   BoxShadow(color: Colors.green, spreadRadius: 3),
-            // ],
           ),
         ),
       ),

@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class TimeSelectV2 extends StatefulWidget {
   final TimeOfDay timeSelect;
+  final String labelText;
+  final bool isReverse;
   final Function(TimeOfDay) onSelectDate;
-  const TimeSelectV2({Key? key, required this.timeSelect, required this.onSelectDate})
+  const TimeSelectV2(
+      {Key? key,
+      required this.timeSelect,
+      required this.onSelectDate,
+      this.isReverse = false,
+      required this.labelText})
       : super(key: key);
 
   @override
@@ -13,6 +20,39 @@ class TimeSelectV2 extends StatefulWidget {
 class _TimeSelectV2State extends State<TimeSelectV2> {
   final TimeOfDay initialTime =
       TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute);
+
+  List<Widget> renderTimeSelectContent() {
+    List<Widget> view = <Widget>[
+      Row(
+        children: <Widget>[
+          Container(
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.access_time,
+                  size: 20.0,
+                  color: Colors.white,
+                ),
+                Text(
+                  " ${widget.timeSelect.format(context)}",
+                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+      Text(
+        "  ${widget.labelText}",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+      ),
+    ];
+
+    return widget.isReverse ? view.reversed.toList() : view;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,34 +64,7 @@ class _TimeSelectV2State extends State<TimeSelectV2> {
           height: 50.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.access_time,
-                          size: 20.0,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          " ${widget.timeSelect.format(context)}",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Text(
-                "  Select time",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                ),
-              ),
-            ],
+            children: renderTimeSelectContent(),
           ),
         ),
         // color: Colors.white,

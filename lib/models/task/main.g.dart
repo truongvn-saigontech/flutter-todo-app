@@ -10,7 +10,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
   return Task(
     taskname: json['taskname'] as String,
     subtask: json['subtask'] as String,
-    tasktime: json['tasktime'] as String,
+    startTime: json['startTime'] as String,
+    endTime: json['endTime'] as String?,
+    id: json['id'] as String?,
     status: const ColorSerialiser().fromJson(json['status'] as int),
   );
 }
@@ -18,6 +20,8 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'taskname': instance.taskname,
       'subtask': instance.subtask,
-      'tasktime': instance.tasktime,
+      'startTime': instance.startTime,
+      'endTime': instance.endTime,
+      'id': instance.id,
       'status': const ColorSerialiser().toJson(instance.status),
     };
