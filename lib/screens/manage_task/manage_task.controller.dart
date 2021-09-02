@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:intl/intl.dart';
-import 'package:to_do_app/helpers/time.helper.dart';
-import 'package:to_do_app/models/task/main.dart';
+// import 'package:intl/intl.dart';
+// import 'package:to_do_app/helpers/time.helper.dart';
+import 'package:to_do_app/models/color_serializer.model.dart';
+import 'package:to_do_app/models/task/task.dart';
 
 class ManageTaskController extends GetxController {
   int updateIndex = -1;
@@ -19,7 +20,9 @@ class ManageTaskController extends GetxController {
     Color tempColor = task.value.status;
 
     var taskJson = task.value.copyWith().toJson();
-    taskJson[fieldName] = value;
+    taskJson[fieldName] =
+        T == Color ? ColorSerialiser().toJson(value as Color) : value;
+
     task.value = Task.fromJson(taskJson);
 
     task.value.status = tempColor;

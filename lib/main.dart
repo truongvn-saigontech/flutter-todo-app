@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_app/configs/routes/calendar.dart';
-import 'package:to_do_app/screens/calendar/main.screen.dart';
-import 'package:to_do_app/screens/list_tasks/main.screen.dart';
-import 'package:to_do_app/screens/manage_task/main.screen.dart';
+import 'package:to_do_app/screens/calendar/calendar.screen.dart';
+import 'package:to_do_app/screens/list_tasks/list_tasks.screen.dart';
+import 'package:to_do_app/screens/manage_task/manage_task.screen.dart';
 import 'configs/routes/tasks.dart';
 
 void main() {

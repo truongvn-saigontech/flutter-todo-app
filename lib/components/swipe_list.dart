@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
-import 'package:to_do_app/models/task/main.dart';
-import 'package:to_do_app/screens/list_tasks/controller.dart';
-import 'package:to_do_app/screens/manage_task/controller.dart';
+import 'package:to_do_app/models/task/task.dart';
+import 'package:to_do_app/screens/list_tasks/list_tasks.controller.dart';
+import 'package:to_do_app/screens/manage_task/manage_task.controller.dart';
 
 class SwipeList extends StatefulWidget {
   final List<Task> dataSource;
@@ -18,14 +18,11 @@ class SwipeList extends StatefulWidget {
 class _SwipeListState extends State<SwipeList> {
   ListTaskController listTaskController = Get.put(ListTaskController());
   ManageTaskController manageTaskController = Get.put(ManageTaskController());
-  bool handleDismisItem(DismissDirection direction, int index) {
+
+  void handleDismisItem(DismissDirection direction, int index) {
     if (direction == DismissDirection.startToEnd) {
       listTaskController.handleDeleteTask(index);
-      return true;
     }
-
-    // manageTaskController.task = ;
-    return false;
   }
 
   @override
@@ -41,6 +38,8 @@ class _SwipeListState extends State<SwipeList> {
           itemCount: widget.dataSource.length,
           itemBuilder: (BuildContext context, int index) {
             return Dismissible(
+              onDismissed: (DismissDirection dismissDirection) =>
+                  handleDismisItem(dismissDirection, index),
               confirmDismiss: (DismissDirection direction) =>
                   handleConfirmDismiss(direction, context, index),
               key: Key(index.toString()),
@@ -71,16 +70,14 @@ class _SwipeListState extends State<SwipeList> {
 
   bool get newMethod => false;
 
-  Future<bool> handleConfirmDismiss(
+  Future<bool?> handleConfirmDismiss(
       DismissDirection direction, BuildContext context, int index) async {
     if (direction == DismissDirection.endToStart) {
-      manageTaskController.handleAssignTask(listTaskController.tasks.toJson()[index]);
+      manageTaskController
+          .handleAssignTask(listTaskController.tasks.toJson()[index]);
       Navigator.pushNamed(context, MANAGE_TASK_PATH);
       return false;
     }
-
-    listTaskController.handleDeleteTask(index);
-    return true;
   }
 }
 
@@ -96,7 +93,7 @@ class IconDissmissible extends StatelessWidget {
     return Row(
       mainAxisAlignment: alignment,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Padding(
           padding: EdgeInsets.all(20),
           child: Icon(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_app/components/colors_picker.dart';
-import 'package:to_do_app/components/input_field/main.dart';
+import 'package:to_do_app/components/input_field.dart';
 import 'package:to_do_app/components/time_select.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
 import 'package:to_do_app/helpers/time.helper.dart';
 import 'package:to_do_app/models/validate.dart';
-import 'package:to_do_app/screens/list_tasks/controller.dart';
-import 'package:to_do_app/screens/manage_task/controller.dart';
+import 'package:to_do_app/screens/list_tasks/list_tasks.controller.dart';
+import 'package:to_do_app/screens/manage_task/manage_task.controller.dart';
 import 'package:validators/validators.dart' as validator;
 
 class ManageTaskScreen extends StatefulWidget {
@@ -31,9 +31,9 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
       int startTimeToHour =
           parseTimeStringToTimeOfDay(manageTaskController.task.value.startTime)
               .hour;
-      int endTimeToHour =
-          parseTimeStringToTimeOfDay(manageTaskController.task.value.endTime)
-              .hour;
+      int endTimeToHour = parseTimeStringToTimeOfDay(
+        manageTaskController.task.value.endTime,
+      ).hour;
 
       if (startTimeToHour > endTimeToHour) {
         final snackBar =
@@ -64,9 +64,12 @@ class _ManageTaskScreenState extends State<ManageTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isCreateTask =
-        validator.isNull(manageTaskController.task.value.taskname) &&
-            validator.isNull(manageTaskController.task.value.subtask);
+    final bool isCreateTask = validator.isNull(
+          manageTaskController.task.value.taskname,
+        ) &&
+        validator.isNull(
+          manageTaskController.task.value.subtask,
+        );
 
     final appBarTitle = isCreateTask ? 'New Task' : 'Edit Task';
     final IconData floatButtonIcon = isCreateTask ? Icons.add : Icons.edit;

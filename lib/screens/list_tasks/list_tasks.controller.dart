@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
-import 'package:to_do_app/models/task/main.dart';
+import 'package:to_do_app/helpers/time.helper.dart';
+import 'package:to_do_app/models/task/task.dart';
 
 class ListTaskController extends GetxController {
+  DateTime selectedDate = DateTime.now();
   RxList<Task> tasks = [
     new Task(
         taskname: "Meeting",
@@ -32,6 +34,7 @@ class ListTaskController extends GetxController {
   ].obs;
 
   void handleAddNewTask(Task newTask) {
+    newTask.date = getDateFormatYYMMDD(this.selectedDate);
     tasks.add(newTask);
   }
 

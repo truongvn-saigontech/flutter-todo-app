@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do_app/components/header.dart';
 import 'package:to_do_app/components/swipe_list.dart';
 import 'package:to_do_app/configs/routes/calendar.dart';
 import 'package:to_do_app/configs/routes/tasks.dart';
-import 'package:to_do_app/screens/list_tasks/controller.dart';
+import 'package:to_do_app/helpers/time.helper.dart';
+import 'package:to_do_app/models/task/task.dart';
+import 'package:to_do_app/screens/list_tasks/list_tasks.controller.dart';
 
 class ListTasksScreen extends StatefulWidget {
   ListTasksScreen({Key? key, required this.title}) : super(key: key);
@@ -20,6 +23,16 @@ class _ListTasksScreenState extends State<ListTasksScreen> {
 
   void _incrementCounter() {
     Navigator.pushNamed(context, MANAGE_TASK_PATH);
+  }
+
+  @override
+  initState(){
+    super.initState();
+
+    // var test = listTaskController.tasks.value.map((Task task) => task.toCaledar());
+    var testV2 = listTaskController.tasks.map((Task task) => task.toCaledar());
+    // print("test $testV2");
+    // print("result => ${parseDateTimeToTimeOfDayString(DateTime.now())}");
   }
 
   @override
